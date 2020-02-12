@@ -6,29 +6,43 @@
 //  Copyright © 2020 James. All rights reserved.
 //
 
+// Import core image and Filter builtIns
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingActionSheet = false
-    @State private var bgColor = Color.white
+    @State private var myImage: Image?
     var body: some View {
-        Text("Tap to change background")
-            .frame(width:300, height: 300)
-        .background(bgColor)
-            .onTapGesture {
-                self.showingActionSheet = true
+        VStack{
+            myImage?
+            .resizable()
+            .scaledToFit()
         }
-        .actionSheet(isPresented: $showingActionSheet){
-            ActionSheet(title: Text("Change background"), message: Text("select new color"), buttons: [
-                .default(Text("Red")) {self.bgColor = Color.red},
-                .default(Text("Green")) {self.bgColor = Color.green},
-                .default(Text("Blue")) {self.bgColor = Color.blue},
-                .cancel()
-            ]
-            )
-            
-//            ActionSheet(title: Text("Action"), message: Text("Quote mark"), buttons: [.default(Text("Show Sheet"))])
+    .onAppear(perform: loadImage)
+    .padding()
+    }
+    func loadImage(){
+//        image = Image("hunter-newton-BgZFS8DPg0I-unsplash")
+        guard let pickedImage = UIImage(named: "hunter-newton-BgZFS8DPg0I-unsplash") else {return}
+//        creating a CI Image from a UI Image
+        let convertedImage = CIImage(image: pickedImage)
+        let context = CIContext()
+        let currentFilter = CIFilter.sepiaTone()
+        
+        currentFilter.inputImage = convertedImage
+        currentFilter.intensity = 1
+        
+        // reading a CG Image as output image from our filter, a CIImage
+        guard let outPutImage = currentFilter.outputImage else {return}
+        //get a CG image from a CI image
+        if let convtd = context.createCGImage(outPutImage, from: outPutImage.extent){
+            //Converting it into a UI image
+            let uiPicha = UIImage(cgImage: convtd)
+            //Convert the UI image into a swiftUI image
+            myImage = Image(uiImage: uiPicha)
         }
+        
     }
 }
 
