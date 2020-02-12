@@ -16,6 +16,7 @@
 		842E82DE23F3EAB500B2FE69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842E82DC23F3EAB500B2FE69 /* LaunchScreen.storyboard */; };
 		842E82E923F3EAB500B2FE69 /* ImageFiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E82E823F3EAB500B2FE69 /* ImageFiltersTests.swift */; };
 		842E82F423F3EAB500B2FE69 /* ImageFiltersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E82F323F3EAB500B2FE69 /* ImageFiltersUITests.swift */; };
+		842E830223F440D300B2FE69 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E830123F440D300B2FE69 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		842E82EF23F3EAB500B2FE69 /* ImageFiltersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFiltersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		842E82F323F3EAB500B2FE69 /* ImageFiltersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFiltersUITests.swift; sourceTree = "<group>"; };
 		842E82F523F3EAB500B2FE69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		842E830123F440D300B2FE69 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				842E82CE23F3EAB400B2FE69 /* AppDelegate.swift */,
 				842E82D023F3EAB400B2FE69 /* SceneDelegate.swift */,
 				842E82D523F3EAB400B2FE69 /* ContentView.swift */,
+				842E830123F440D300B2FE69 /* ImagePicker.swift */,
 				842E82D723F3EAB500B2FE69 /* Assets.xcassets */,
 				842E82DC23F3EAB500B2FE69 /* LaunchScreen.storyboard */,
 				842E82DF23F3EAB500B2FE69 /* Info.plist */,
@@ -272,6 +275,7 @@
 			files = (
 				842E82D423F3EAB400B2FE69 /* ImageFilters.xcdatamodeld in Sources */,
 				842E82CF23F3EAB400B2FE69 /* AppDelegate.swift in Sources */,
+				842E830223F440D300B2FE69 /* ImagePicker.swift in Sources */,
 				842E82D623F3EAB400B2FE69 /* ContentView.swift in Sources */,
 				842E82D123F3EAB400B2FE69 /* SceneDelegate.swift in Sources */,
 			);
