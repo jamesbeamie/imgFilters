@@ -9,14 +9,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var imgBlur: CGFloat = 0
-    var body: some View {
-        VStack{
-            Text("Image Filter")
-            .blur(radius: imgBlur)
-            Slider(value: $imgBlur, in: 0...20)
+    @State var imgBlur: CGFloat = 0{
+        didSet{
+            print("New Blur value is: \(imgBlur)")
         }
-    .padding()
+    }
+    let blur = Binding<CGFloat>(
+        get:{
+            self.imgBlur
+    },
+        set: {
+            self.imgBlur = $0
+            print("New Blur value is: \(self.imgBlur)")
+    }
+    )
+    
+    var body: some View {
+            VStack{
+                Text("Image Filter")
+                .blur(radius: imgBlur)
+                Slider(value: blur, in: 0...20)
+            }.padding()
+        
     }
 }
 
