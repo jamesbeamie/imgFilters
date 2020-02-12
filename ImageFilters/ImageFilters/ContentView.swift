@@ -9,8 +9,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var imgBlur: CGFloat = 0
     var body: some View {
-        Text("Hello, World!")
+        VStack{
+            Text("Image Filter")
+            .blur(radius: imgBlur)
+            Slider(value: $imgBlur, in: 0...20)
+        }
+    .padding()
     }
 }
 
