@@ -43,9 +43,9 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 }
                 }
-//                .onTapGesture {
-//                   pick
-//                }
+                .onTapGesture {
+                    self.showingImagePicker = true
+                }
                 HStack{
                     Text("Adjust")
                     Slider(value: self.$filterIntensity)
@@ -61,6 +61,9 @@ struct ContentView: View {
         }
             .padding([.horizontal, .bottom])
             .navigationBarTitle("Image Manipulation")
+            .sheet(isPresented: $showingImagePicker, onDismiss: loadImage){
+                        ImagePicker(image: self.$inputImage)
+                    }
         }
     }
 //        VStack{
@@ -71,16 +74,14 @@ struct ContentView: View {
 //                self.showingImagePicker = true
 //            }
 //            }.padding()
-//        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage){
-//            ImagePicker(image: self.$inputImage)
-//        }
+//
 //    }
-//    func loadImage(){
-//        guard let inputImage = inputImage else {return}
-//        image = Image(uiImage: inputImage)
-//        let imageSaver = ImageSaver()
-//        imageSaver.writeToPhotoAlbum(image: inputImage)
-//    }
+    func loadImage(){
+        guard let inputImage = inputImage else {return}
+        image = Image(uiImage: inputImage)
+        let imageSaver = ImageSaver()
+        imageSaver.writeToPhotoAlbum(image: inputImage)
+    }
 //}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
