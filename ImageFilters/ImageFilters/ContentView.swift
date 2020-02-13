@@ -12,15 +12,7 @@ import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 //Custom image saver class
-class ImageSaver: NSObject{
-    func writeToPhotoAlbum(image: UIImage){
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveError), nil)
-    }
-    @objc func saveError(_ image: UIImage, didFinishSavingWithError error:Error?, contextInfo: UnsafeRawPointer ){
-        // log
-        print("Saved")
-    }
-}
+
 
 struct ContentView: View {
     @State private var image: Image?
@@ -28,6 +20,7 @@ struct ContentView: View {
     @State private var showingFiltterSheet = false
     @State private var filterIntensity = 0.5
     @State private var inputImage: UIImage?
+    @State private var processedImage: UIImage?
     @State var currentFilter: CIFilter = CIFilter.sepiaTone()
     let context = CIContext()
     var body: some View {
@@ -70,6 +63,16 @@ struct ContentView: View {
                         }
                         Spacer()
                         Button("Save"){
+                            guard let processedImage = self.processedImage else {return}
+                             let imageSaver = ImageSaver()
+                            imageSaver.successHandler = {
+                                print("Image saved")
+                            }
+                            imageSaver.errorHandler={
+                                print("Error saving picha:  \($0.localizedDescription)")
+                            }
+                            imageSaver.writeToPhotoAlbum(image: processedImage)
+                            
                         }
                     }
         }
@@ -98,8 +101,6 @@ struct ContentView: View {
         let beginImage = CIImage(image: inputImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         applyProccesing()
-//        let imageSaver = ImageSaver()
-//        imageSaver.writeToPhotoAlbum(image: inputImage)
     }
     
     func applyProccesing(){
@@ -116,6 +117,7 @@ struct ContentView: View {
         if let cgimg = context.createCGImage(outputImage, from: outputImage.extent){
             let uiImage = UIImage(cgImage: cgimg)
             image = Image(uiImage: uiImage)
+            processedImage = uiImage
             }
         }
     func setFilter(_ filter: CIFilter){
