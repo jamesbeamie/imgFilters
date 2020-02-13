@@ -11,6 +11,17 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import SwiftUI
 
+//Custom image saver class
+class ImageSaver: NSObject{
+    func writeToPhotoAlbum(image: UIImage){
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveError), nil)
+    }
+    @objc func saveError(_ image: UIImage, didFinishSavingWithError error:Error?, contextInfo: UnsafeRawPointer ){
+        // Console
+        print("Saved")
+    }
+}
+
 struct ContentView: View {
     @State private var image: Image?
     @State private var showingImagePicker = false
@@ -23,7 +34,7 @@ struct ContentView: View {
             Button("Select Image"){
                 self.showingImagePicker = true
             }
-        }
+            }.padding()
         .sheet(isPresented: $showingImagePicker, onDismiss: loadImage){
             ImagePicker(image: self.$inputImage)
         }
@@ -31,6 +42,8 @@ struct ContentView: View {
     func loadImage(){
         guard let inputImage = inputImage else {return}
         image = Image(uiImage: inputImage)
+        let imageSaver = ImageSaver()
+        imageSaver.writeToPhotoAlbum(image: inputImage)
     }
 }
 struct ContentView_Previews: PreviewProvider {
