@@ -17,7 +17,7 @@ class ImageSaver: NSObject{
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveError), nil)
     }
     @objc func saveError(_ image: UIImage, didFinishSavingWithError error:Error?, contextInfo: UnsafeRawPointer ){
-        // Console
+        // log
         print("Saved")
     }
 }
@@ -27,8 +27,20 @@ struct ContentView: View {
     @State private var showingImagePicker = false
     @State private var filterIntensity = 0.5
     @State private var inputImage: UIImage?
+    @State var currentFilter = CIFilter.sepiaTone()
+    let context = CIContext()
     var body: some View {
-        NavigationView{
+        
+        let intensity = Binding<Double>(
+            get:{
+                self.filterIntensity
+        },
+            set:{
+                self.filterIntensity = $0
+                self.applyProccesing()
+        }
+        )
+        return NavigationView{
             VStack{
                 ZStack{
                     Rectangle()
@@ -48,7 +60,7 @@ struct ContentView: View {
                 }
                 HStack{
                     Text("Adjust")
-                    Slider(value: self.$filterIntensity)
+                    Slider(value: intensity)
                     }
                 .padding(.vertical)
                 HStack{
@@ -66,23 +78,24 @@ struct ContentView: View {
                     }
         }
     }
-//        VStack{
-//            image?
-//                .resizable()
-//                .scaledToFit()
-//            Button("Select Image"){
-//                self.showingImagePicker = true
-//            }
-//            }.padding()
-//
-//    }
     func loadImage(){
         guard let inputImage = inputImage else {return}
-        image = Image(uiImage: inputImage)
-        let imageSaver = ImageSaver()
-        imageSaver.writeToPhotoAlbum(image: inputImage)
+        let beginImage = CIImage(image: inputImage)
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        applyProccesing()
+//        let imageSaver = ImageSaver()
+//        imageSaver.writeToPhotoAlbum(image: inputImage)
     }
-//}
+    
+    func applyProccesing(){
+        currentFilter.intensity = Float(filterIntensity)
+        guard let outputImage = currentFilter.outputImage else {return}
+        
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent){
+            let uiImage = UIImage(cgImage: cgimg)
+            image = Image(uiImage: uiImage)
+        }
+    }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
