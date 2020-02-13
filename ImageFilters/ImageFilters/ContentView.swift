@@ -25,29 +25,66 @@ class ImageSaver: NSObject{
 struct ContentView: View {
     @State private var image: Image?
     @State private var showingImagePicker = false
+    @State private var filterIntensity = 0.5
     @State private var inputImage: UIImage?
     var body: some View {
-        VStack{
+        NavigationView{
+            VStack{
+                ZStack{
+                    Rectangle()
+                        .fill(Color.secondary)
+        if image != nil {
             image?
-                .resizable()
-                .scaledToFit()
-            Button("Select Image"){
-                self.showingImagePicker = true
-            }
-            }.padding()
-        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage){
-            ImagePicker(image: self.$inputImage)
+            .resizable()
+            .scaledToFit()
+        }else{
+            Text("Pick an Image")
+                .font(.headline)
+                .foregroundColor(.white)
+                }
+                }
+//                .onTapGesture {
+//                   pick
+//                }
+                HStack{
+                    Text("Adjust")
+                    Slider(value: self.$filterIntensity)
+                    }
+                .padding(.vertical)
+                HStack{
+                        Button("Apply Filter"){
+                        }
+                        Spacer()
+                        Button("Save"){
+                        }
+                    }
+        }
+            .padding([.horizontal, .bottom])
+            .navigationBarTitle("Image Manipulation")
         }
     }
-    func loadImage(){
-        guard let inputImage = inputImage else {return}
-        image = Image(uiImage: inputImage)
-        let imageSaver = ImageSaver()
-        imageSaver.writeToPhotoAlbum(image: inputImage)
-    }
-}
+//        VStack{
+//            image?
+//                .resizable()
+//                .scaledToFit()
+//            Button("Select Image"){
+//                self.showingImagePicker = true
+//            }
+//            }.padding()
+//        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage){
+//            ImagePicker(image: self.$inputImage)
+//        }
+//    }
+//    func loadImage(){
+//        guard let inputImage = inputImage else {return}
+//        image = Image(uiImage: inputImage)
+//        let imageSaver = ImageSaver()
+//        imageSaver.writeToPhotoAlbum(image: inputImage)
+//    }
+//}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+}
 }
