@@ -38,7 +38,7 @@ struct ContentView: View {
             VStack{
                 ZStack{
                     Rectangle()
-                        .fill(Color.secondary)
+                        .fill(Color.white)
         if image != nil {
             image?
             .resizable()
@@ -46,7 +46,7 @@ struct ContentView: View {
         }else{
             Text("Pick an Image")
                 .font(.headline)
-                .foregroundColor(.white)
+                .foregroundColor(.blue)
                 }
                 }
                 .onTapGesture {
