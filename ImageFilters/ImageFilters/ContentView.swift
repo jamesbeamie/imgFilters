@@ -106,7 +106,7 @@ struct ContentView: View {
     func applyProccesing(){
         let inputKey = currentFilter.inputKeys
         
-//        set intensity values for respective types of filters
+//        set intensity values for respective filters
         if inputKey.contains(kCIInputIntensityKey) {currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey)}
         if inputKey.contains(kCIInputRadiusKey) {currentFilter.setValue(filterIntensity * 200, forKey: kCIInputRadiusKey)}
         if inputKey.contains(kCIInputScaleKey) {currentFilter.setValue(filterIntensity * 10, forKey: kCIInputScaleKey)}
